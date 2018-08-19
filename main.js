@@ -66,7 +66,7 @@ function seekMatch(target){
 				    while (counter.toString().length <= distance) {
 				    	if (checkedNumbers){
 				    		triesCounter +=1;
-				    		continue;
+				    		break;
 				    	}
 				    	var counter = counter + 1;
 				    	var newLine = line + counter.toString();
