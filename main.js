@@ -31,7 +31,7 @@ function writeJson(content){
         return console.log(err);
     }
     console.log("The file was saved!");
-    return;
+    exit();
 }); 
 }
 
