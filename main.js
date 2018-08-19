@@ -88,5 +88,5 @@ function seekMatch(file, target){
 //iterate through dictionaries directory and 
 //run seekmatch
 fs.readdirSync('dicts').forEach(file => {
-  seekMatch(file);
+  seekMatch('./dicts/' + file);
 })
