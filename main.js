@@ -4,8 +4,9 @@ var jsonfile = require('jsonfile')
 const fs = require('fs');
 
 //file containing target string
-var target = 'target.json';
-var match  = false;
+var target     = 'target.json';
+var match      = false;
+var triedArray = [];
 
 //read target json
 var targetFileObj = jsonfile.readFileSync(target);
@@ -33,25 +34,51 @@ function writeJson(content){
 }); 
 }
 
+function isAllNumbers(str){
+	//test whether or not a string only contains numbers
+	return /^\d+$/.test(str);
+}
+
 function seekMatch(target){
 	//line by line object
-    var thisLineByLineReader = new LineByLineReader('passDictionary.txt');
+    var thisLineByLineReader = new LineByLineReader('passDictionaryTEST.txt');
     var thisLine             = '';
+    var triesCounter         = 0;
+    //have we checked integers under 8 length already?
+    var checkedNumbers       = false;
 
 	//read through lines without buffering to memory
 	thisLineByLineReader.on('line', function (line) {
 		if (line.length >= 8){
 			//for strings with length of 8, check trip for match
+			//print test data every ~100 guesses
+			if (triesCounter % 100 == 0) console.log('100 attempts: currently trying to match pass: ' + line);
             isMatch(line, target);
-		}else if (line.length < 8){
+            //update tries counter
+			triesCounter += 1;
+			//update 'tried' array
+			triedArray[line] = 1;
+		}else if (line.length < 8 && (triedArray.line != 1) && !(line in triedArray)){
 			//for strings of less than length of 8, try adding numbers until you've run out of strings
 			if (!isMatch(line, target)){
 				var counter  = 0;
 			    var distance = 8 - line.length;
 				    while (counter.toString().length <= distance) {
+				    	if (checkedNumbers){
+				    		triesCounter +=1;
+				    		continue;
+				    	}
 				    	var counter = counter + 1;
 				    	var newLine = line + counter.toString();
+				    	//if we have checked all numbers under 8 length already, move to next line
+				    	if (isAllNumbers(line) && newLine.length == 8){
+				    		checkedNumbers = true;
+				    	} 
+				    	if (triesCounter % 100 == 0) console.log('100 attempts: currently trying to match pass: ' + line);
 				    	isMatch(newLine, target);
+				    	//update tries counter
+				    	triesCounter += 1;
+				    	triedArray[line] = 1;
 				    }
 				}
 		}
