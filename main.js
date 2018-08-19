@@ -39,9 +39,9 @@ function isAllNumbers(str){
 	return /^\d+$/.test(str);
 }
 
-function seekMatch(target){
+function seekMatch(file, target){
 	//line by line object
-    var thisLineByLineReader = new LineByLineReader('passDictionary.txt');
+    var thisLineByLineReader = new LineByLineReader(file);
     var thisLine             = '';
     var triesCounter         = 0;
     //have we checked integers under 8 length already?
@@ -85,4 +85,8 @@ function seekMatch(target){
     });
 }
 
-seekMatch(targetString);
+//iterate through dictionaries directory and 
+//run seekmatch
+fs.readdirSync('dicts').forEach(file => {
+  seekMatch(file);
+})
