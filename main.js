@@ -49,7 +49,7 @@ function seekMatch(target){
 
 	//read through lines without buffering to memory
 	thisLineByLineReader.on('line', function (line) {
-		if (line.length >= 8){
+		if (line.length >= 8 && (line.length > 4)){
 			//for strings with length of 8, check trip for match
 			//print test data every ~100 guesses
 			if (triesCounter % 100 == 0) console.log('100 attempts: currently trying to match pass: ' + line);
@@ -58,7 +58,7 @@ function seekMatch(target){
 			triesCounter += 1;
 			//update 'tried' array
 			triedArray[line] = 1;
-		}else if (line.length < 8 && (triedArray.line != 1) && !(line in triedArray)){
+		}else if (line.length < 8 && (triedArray.line != 1) && !(line in triedArray) && (line.length > 4)){
 			//for strings of less than length of 8, try adding numbers until you've run out of strings
 			if (!isMatch(line, target)){
 				var counter  = 0;
