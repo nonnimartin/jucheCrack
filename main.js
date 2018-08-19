@@ -41,7 +41,7 @@ function isAllNumbers(str){
 
 function seekMatch(target){
 	//line by line object
-    var thisLineByLineReader = new LineByLineReader('passDictionaryTEST.txt');
+    var thisLineByLineReader = new LineByLineReader('passDictionary.txt');
     var thisLine             = '';
     var triesCounter         = 0;
     //have we checked integers under 8 length already?
