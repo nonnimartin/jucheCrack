@@ -31,6 +31,7 @@ function writeJson(content){
         return console.log(err);
     }
     console.log("The file was saved!");
+    return;
 }); 
 }
 
@@ -54,7 +55,6 @@ function seekMatch(file, target){
 			//print test data every ~100 guesses
 			if (triesCounter % 100 == 0) console.log('100 attempts: currently trying to match pass: ' + line);
             isMatch(line, target);
-            console.log('trying to match: ' + line + ' current hash = ' + trip(line) + ' to ' + target);
             //update tries counter
 			triesCounter += 1;
 			//update 'tried' array
